@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   decrement,
   increment,
-  incrementByAmount,
   incrementAsync,
-  selectCount,
+  incrementByAmount,
+  selectCount
 } from './counterSlice';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Counter.module.css';
 
 export function Counter() {
-  const count = useSelector(selectCount);
+  const count = useSelector( selectCount );
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [ incrementAmount, setIncrementAmount ] = useState( '2' );
 
   return (
     <div>
@@ -20,7 +20,7 @@ export function Counter() {
         <button
           className={styles.button}
           aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+          onClick={() => dispatch( increment() )}
         >
           +
         </button>
@@ -28,7 +28,7 @@ export function Counter() {
         <button
           className={styles.button}
           aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
+          onClick={() => dispatch( decrement() )}
         >
           -
         </button>
@@ -38,19 +38,19 @@ export function Counter() {
           className={styles.textbox}
           aria-label="Set increment amount"
           value={incrementAmount}
-          onChange={e => setIncrementAmount(e.target.value)}
+          onChange={e => setIncrementAmount( e.target.value )}
         />
         <button
           className={styles.button}
           onClick={() =>
-            dispatch(incrementByAmount(Number(incrementAmount) || 0))
+            dispatch( incrementByAmount( Number( incrementAmount ) || 0 ) )
           }
         >
           Add Amount
         </button>
         <button
           className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
+          onClick={() => dispatch( incrementAsync( Number( incrementAmount ) || 0 ) )}
         >
           Add Async
         </button>

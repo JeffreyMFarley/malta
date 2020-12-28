@@ -1,6 +1,10 @@
 import './App.less'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import ListGroup from 'react-bootstrap/ListGroup'
 import React from 'react'
+import Row from 'react-bootstrap/Row'
 import TagPanel from './components/TagPanel'
 
 /**
@@ -10,19 +14,23 @@ import TagPanel from './components/TagPanel'
 */
 function App() {
   return (
-    <div id="App">
-      <header>Header</header>
-      <main>
-        <nav>Nav</nav>
-        <section>
-          <article>Article 1</article>
-          <article>Article 2</article>
-          <article>Article 3</article>
-        </section>
-        <aside><TagPanel /></aside>
-      </main>
-      <footer>footer</footer>
-    </div>
+    <Container id="App" fluid>
+      <Row as="header">Header</Row>
+      <Row as="main">
+        <Col as="nav" xs={2}>
+          <ListGroup as="ul" variant="flush">
+            <ListGroup.Item as="li" active>Task Areas</ListGroup.Item>
+            <ListGroup.Item as="li">Attachment #1</ListGroup.Item>
+            <ListGroup.Item as="li">Attachment #2</ListGroup.Item>
+            <ListGroup.Item as="li">Instructions</ListGroup.Item>
+          </ListGroup>
+        </Col>
+        <Col as="section">
+        </Col>
+        <Col as="aside" xs={5}><TagPanel /></Col>
+      </Row>
+      <Row as="footer">footer</Row>
+    </Container>
   )
 }
 

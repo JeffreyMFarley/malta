@@ -1,5 +1,6 @@
 import './App.less'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ActiveDocument from './components/ActiveDocument'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -25,8 +26,7 @@ function App() {
             <ListGroup.Item as="li">Instructions</ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col as="section">
-        </Col>
+        <Col as="section"><ActiveDocument /></Col>
         <Col as="aside" xs={5}><TagPanel /></Col>
       </Row>
       <Row as="footer">footer</Row>

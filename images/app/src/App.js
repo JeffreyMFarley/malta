@@ -1,4 +1,5 @@
 import './App.less'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react'
 
 /**

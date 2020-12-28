@@ -1,6 +1,7 @@
 import './App.less'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react'
+import TagPanel from './components/TagPanel'
 
 /**
 * renders the App component
@@ -18,7 +19,7 @@ function App() {
           <article>Article 2</article>
           <article>Article 3</article>
         </section>
-        <aside>ads</aside>
+        <aside><TagPanel /></aside>
       </main>
       <footer>footer</footer>
     </div>

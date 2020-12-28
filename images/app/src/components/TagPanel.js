@@ -16,7 +16,7 @@ const renderSwitch = ( x, level ) => {
     )
   }
 
-  return <Button class="tag-leaf" variant="outline-secondary">{x}</Button>
+  return <Button variant="outline-secondary">{x}</Button>
 }
 
 /**
@@ -27,7 +27,7 @@ const renderSwitch = ( x, level ) => {
 */
 function TagPanel( { tags } ) {
   return (
-    <div class="tag-panel">
+    <div className="tag-panel">
       { renderSwitch( tags.groups, 0 ) }
     </div>
   )

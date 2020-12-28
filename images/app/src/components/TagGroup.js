@@ -11,7 +11,7 @@ export default class TagGroup extends React.Component {
     const { children, elementChooser, label, level } = this.props;
 
     return (
-      <ButtonGroup class="tag-group">
+      <ButtonGroup>
         <Button variant={ LEVEL_COLORS[level] }>{label}</Button>
         { elementChooser( children, level ) }
       </ButtonGroup>
@@ -23,7 +23,7 @@ export default class TagGroup extends React.Component {
 // Meta
 
 TagGroup.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.array.isRequired,
   elementChooser: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   level: PropTypes.number

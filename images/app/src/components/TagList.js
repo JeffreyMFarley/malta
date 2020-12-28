@@ -7,7 +7,7 @@ export default class TagList extends React.Component {
   render() {
     const { elementChooser, items, level } = this.props;
     return (
-      <ButtonToolbar class="tag-list">
+      <ButtonToolbar>
         { items.map( x => elementChooser( x, level ) ) }
       </ButtonToolbar>
     );

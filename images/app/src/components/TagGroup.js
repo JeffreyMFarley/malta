@@ -1,20 +1,28 @@
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import Col from 'react-bootstrap/Col'
 import PropTypes from 'prop-types';
 import React from 'react';
-
-const LEVEL_COLORS = [ 'danger', 'primary', 'info' ]
+import Row from 'react-bootstrap/Row'
 
 export default class TagGroup extends React.Component {
-
   render() {
-    const { children, elementChooser, label, level } = this.props;
+    const { children, label } = this.props;
 
     return (
-      <ButtonGroup>
-        <Button variant={ LEVEL_COLORS[level] }>{label}</Button>
-        { elementChooser( children, level ) }
-      </ButtonGroup>
+      <Row noGutters>
+        <Col xs="auto">
+          <Button variant="secondary">{label}</Button>
+        </Col>
+        <Col xs="auto">
+          <ButtonGroup>
+            { children.map(
+              x => <Button variant="outline-secondary">{x}</Button>
+            ) }
+          </ButtonGroup>
+        </Col>
+      </Row>
     );
   }
 }
@@ -24,12 +32,8 @@ export default class TagGroup extends React.Component {
 
 TagGroup.propTypes = {
   children: PropTypes.array.isRequired,
-  elementChooser: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  level: PropTypes.number
+  label: PropTypes.string.isRequired
 }
 
 TagGroup.defaultProps = {
-  children: [],
-  level: 0
 }

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   dimensions: [
-    { stack: [
+    { Stack: [
       { infrastructure: [ 'Windows', 'Linux', 'IaaS', 'Cloud' ]},
       { database: [ 'Relational', 'Warehouse' ]},
       { API: []},
@@ -10,7 +10,7 @@ export const initialState = {
       { BI: [ 'Reports', 'KPI', 'Analytics', 'M/L', 'AI', 'Map/Reduce' ]},
       { ETL: []}
     ]},
-    { tasks: [
+    { Tasks: [
       { start: []},
       { PMO: [ 'track budget', 'manage resources', 'agile' ]},
       { plan: [ 'gather requirements' ]},

@@ -26,4 +26,10 @@ $ yarn add redux-mock-store
 
 # Adding prop-types support
 $ yarn add prop-types
+
+# Adding bootstrap components
+$ yarn add react-bootstrap bootstrap
+
+# Adding selectors
+$ yarn add reselect
 ```

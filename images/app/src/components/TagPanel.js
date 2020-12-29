@@ -28,7 +28,7 @@ const renderSwitch = ( x, level ) => {
 function TagPanel( { tags } ) {
   return (
     <div className="tag-panel">
-      { renderSwitch( tags.groups, 0 ) }
+      { renderSwitch( tags.dimensions, 0 ) }
     </div>
   )
 }

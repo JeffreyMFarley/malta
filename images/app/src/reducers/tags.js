@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
-  groups: [
+  dimensions: [
     { stack: [
-      'infrastructure',
+      { infrastructure: [ 'Windows', 'Linux', 'IaaS', 'Cloud' ]},
       { database: [ 'Relational', 'Warehouse' ]},
-      'API',
-      { UI: [ 'web', 'desktop', 'visualization' ]},
-      { BI: [ 'Reports', 'KPI', 'Analytics', 'M/L', 'AI', 'map/reduce' ]},
-      'ETL'
+      { API: []},
+      { UI: [ 'Browser', 'Desktop', 'Visualization', 'Charts' ]},
+      { BI: [ 'Reports', 'KPI', 'Analytics', 'M/L', 'AI', 'Map/Reduce' ]},
+      { ETL: []}
     ]},
     { tasks: [
-      'start',
-      'pmo',
-      'plan',
+      { start: []},
+      { PMO: [ 'track budget', 'manage resources', 'agile' ]},
+      { plan: [ 'gather requirements' ]},
       { design: [ 'ux', 'data modeling', 'architecture' ]},
-      { dev: [ 'write code' ]},
+      { dev: [ 'code', 'test' ]},
       { ops: [ 'release', 'monitor', 'service desk', 'infra support' ]},
-      'close'
+      { close: []}
     ]}
   ]
 }

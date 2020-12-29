@@ -79,7 +79,7 @@ rules:
     - except-parens
 
   # Enforces flagging use of the console.
-  no-console: 1
+  no-console: 0
 
   # Disallows use of constant expressions in conditions.
   no-constant-condition: 2

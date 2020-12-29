@@ -15,16 +15,19 @@ import TagDimension from './TagDimension';
 function TagPanel( { dimensions } ) {
   return (
     <Container className="px-0">
-      <Row class="justify-content-between" noGutters>
+      <Row className="justify-content-between" noGutters>
         <Col><h4>Tags</h4></Col>
-        <Col xs={2}>
+        <Col xs={3}>
           <Button block size="sm" variant="light">+ Area</Button>
         </Col>
       </Row>
       <Row noGutters>
-        { dimensions.map( x =>
+        { dimensions.map( ( x, i ) =>
           Object.keys( x ).map( k =>
-            <TagDimension label={k} children={x[k]} key={k} />
+            <TagDimension label={k}
+                          children={x[k]}
+                          path={ [ i, k ] }
+                          key={k} />
           )
         ) }
       </Row>

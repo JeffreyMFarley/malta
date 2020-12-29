@@ -9,18 +9,21 @@ import TagGroup from './TagGroup';
 export default class TagDimension extends React.Component {
 
   render() {
-    const { children, label } = this.props;
-    const groups = children.map( x =>
+    const { children, label, path } = this.props;
+    const groups = children.map( ( x, i ) =>
       Object.keys( x ).map( k =>
-        <TagGroup label={k} children={x[k]} key={k} />
+        <TagGroup label={k}
+                  children={x[k]}
+                  path={ [ ...path, i, k ] }
+                  key={k} />
       )
     )
 
     return (
       <Container className="px-0">
-        <Row class="justify-content-between" noGutters>
-          <Col><h6>{label}</h6></Col>
-          <Col xs={2}>
+        <Row className="justify-content-between pt-3" noGutters>
+          <Col><h5>{label}</h5></Col>
+          <Col xs={3}>
             <Button block size="sm" variant="light">+ Group</Button>
           </Col>
         </Row>
@@ -35,7 +38,8 @@ export default class TagDimension extends React.Component {
 
 TagDimension.propTypes = {
   children: PropTypes.array.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  path: PropTypes.array.isRequired
 }
 
 TagDimension.defaultProps = {

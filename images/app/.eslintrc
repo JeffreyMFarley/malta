@@ -193,7 +193,7 @@ rules:
   # Enforces specific maximum cyclomatic complexity.
   complexity:
     - 1
-    - 4
+    - 6
 
   # Enforces return statements to either always or never specify values.
   consistent-return: 2

@@ -16,7 +16,7 @@ import TagPanel from './components/TagPanel'
 function App() {
   return (
     <Container id="App" fluid>
-      <Row as="header">Header</Row>
+      <Row as="header" className="px-3"><h1>Malta</h1></Row>
       <Row as="main">
         <Col as="nav" xs={2}>
           <ListGroup as="ul" variant="flush">
@@ -26,8 +26,8 @@ function App() {
             <ListGroup.Item as="li">Instructions</ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col as="section"><ActiveDocument /></Col>
-        <Col as="aside" xs={5}><TagPanel /></Col>
+        <Col as="section" className="px-0"><ActiveDocument /></Col>
+        <Col as="aside" xs={5} className="ps-0"><TagPanel /></Col>
       </Row>
       <Row as="footer">footer</Row>
     </Container>

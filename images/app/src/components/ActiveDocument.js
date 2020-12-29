@@ -57,14 +57,18 @@ class ActiveDocument extends React.Component {
         <Row className="justify-content-between" noGutters>
           <Col>
             { current > min &&
-              <Button block onClick={ () => dispatch( prevLine() ) }>
+              <Button block
+                      variant="info"
+                      onClick={ () => dispatch( prevLine() ) }>
               { prevText }
             </Button>}
           </Col>
           <Col />
           <Col>
             { current < last &&
-              <Button block onClick={ () => dispatch( nextLine() ) }>
+              <Button block
+                      variant="info"
+                      onClick={ () => dispatch( nextLine() ) }>
               { nextText }
             </Button>}
           </Col>

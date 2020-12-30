@@ -3,7 +3,7 @@
 import {
   activeLineSelector, assignedTagsSelector
 } from '../selectors/document'
-import { addTag } from '../actions/tags'
+import { addTag, assignTag, unassignTag } from '../actions/tags'
 import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form'
@@ -41,38 +41,38 @@ class TagGroup extends React.Component {
   }
 
   render() {
-    const { activeLine, assigned, children, label, tokenized } = this.props
+    const {
+      activeLine, assigned, children, dispatch, label, tokenized
+    } = this.props
     const { showEdit } = this.state
 
-    const selVariant = ( x, defaultValue ) => {
+    const buildButton = ( x, defaultValue ) => {
       const lx = x.toLowerCase();
       const wx = ' ' + lx;
 
       let variant = defaultValue
+      let clickAction = assignTag
       if ( assigned.has( x ) ) {
         variant = 'primary'
+        clickAction = unassignTag
       } else if ( tokenized.has( lx ) ) {
         variant = 'warning'
       } else if ( activeLine.includes( wx ) ) {
         variant = 'warning'
       }
 
-      return variant
+      return <Button variant={ variant }
+                     size="sm"
+                     key={x}
+                     onClick={ () => dispatch( clickAction( x ) ) }>
+              {x}
+            </Button>
     }
 
     return (
       <Row noGutters className="pb-2">
-        <Button variant={ selVariant( label, 'secondary' ) }
-                size="sm">
-          {label}
-        </Button>
-        { children.map(
-          x => <Button variant={ selVariant( x, 'outline-secondary' ) }
-                       size="sm"
-                       key={x}>
-                 {x}
-               </Button>
-        ) }
+        { buildButton( label, 'secondary' ) }
+        { children.map( x => buildButton( x, 'outline-secondary' ) ) }
         <Button variant="light"
                size="sm"
                onClick={this.handleToggle}>

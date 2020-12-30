@@ -1,5 +1,6 @@
+import { assignTag, unassignTag } from '../actions/tags'
+import { createSlice, current } from '@reduxjs/toolkit'
 import { nextLine, prevLine } from '../actions/navigateDocument'
-import { createSlice } from '@reduxjs/toolkit'
 import fixtureTaskAreas from './__fixtures__/doc-task-areas'
 
 export const initialState = {
@@ -13,6 +14,15 @@ export const documentSlice = createSlice( {
   initialState,
   reducers: {},
   extraReducers: {
+    [assignTag]: ( state, action ) => {
+      const { value } = action.payload
+      const assigned = current( state ).tagged[state.current]
+      if ( typeof assigned === 'undefined' ) {
+        state.tagged[state.current] = new Set( [ value ] )
+      } else {
+        state.tagged[state.current].add( value )
+      }
+    },
     [nextLine]: state => {
       state.current += 1;
       if ( state.current >= state.lines.length ) {
@@ -26,6 +36,13 @@ export const documentSlice = createSlice( {
         state.current = 0
       }
       return state
+    },
+    [unassignTag]: ( state, action ) => {
+      const { value } = action.payload
+      const assigned = current( state ).tagged[state.current]
+      if ( typeof assigned !== 'undefined' ) {
+        state.tagged[state.current].delete( value )
+      }
     }
   }
 } );

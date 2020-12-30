@@ -1,6 +1,6 @@
-import { createSlice, current } from '@reduxjs/toolkit';
 import { addTag } from '../actions/tags'
 import { cloneDeep } from '../utils'
+import { createSlice } from '@reduxjs/toolkit';
 import fixtureTags from './__fixtures__/tags-initial'
 
 export const initialState = cloneDeep( fixtureTags )

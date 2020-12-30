@@ -82,7 +82,5 @@ module.exports = Object.freeze( {
     'ee. Major production releases must include launch plan to identify all activities related to the product launch including but not limited to: Service Center/Help Desk communication, training and coordination, stakeholder communication, end user education and outreach materials, applicable trainings, user guides, demo recordings, and formal internal and external announcements scripts and dissemination mechanism.',
     'ff. Development and maintenance of application security documentation including documentation in support of achieving an Authority to Operate (ATO).'
   ],
-  tagged: {
-    3: [ 'develop', 'code', 'test' ]
-  }
+  tagged: {}
 } )

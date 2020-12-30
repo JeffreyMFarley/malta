@@ -13,6 +13,5 @@ export const activeLineSelector = state => {
 
 export const assignedTagsSelector = state => {
   const { current, tagged } = state.document
-  const assigned = coalesce( tagged, current, [] )
-  return new Set( assigned )
+  return coalesce( tagged, current, new Set() )
 }

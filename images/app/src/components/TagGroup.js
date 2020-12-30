@@ -1,8 +1,10 @@
 /* eslint-disable no-console, no-alert */
 
+import {
+  activeLineSelector, assignedTagsSelector
+} from '../selectors/document'
 import { addTag } from '../actions/tags'
 import Button from 'react-bootstrap/Button'
-import { coalesce } from '../utils'
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form'
 // import PropTypes from 'prop-types';
@@ -32,12 +34,19 @@ class TagGroup extends React.Component {
   }
 
   render() {
-    const { assigned, children, label } = this.props;
+    const { activeLine, assigned, children, label, tokenized } = this.props
 
     const selVariant = ( x, defaultValue ) => {
+      const lx = x.toLowerCase();
+      const wx = ' ' + lx;
+
       let variant = defaultValue
       if ( assigned.has( x ) ) {
         variant = 'primary'
+      } else if ( tokenized.has( lx ) ) {
+        variant = 'warning'
+      } else if ( activeLine.includes( wx ) ) {
+        variant = 'warning'
       }
 
       return variant
@@ -79,10 +88,12 @@ class TagGroup extends React.Component {
 // redux
 
 const mapStateToProps = state => {
-  const { current, tagged } = state.document
-  const assigned = coalesce( tagged, current, [] )
+  const activeLine = activeLineSelector( state ).toLowerCase()
+
   return {
-    assigned: new Set( assigned )
+    activeLine,
+    assigned: assignedTagsSelector( state ),
+    tokenized: new Set( activeLine.split( ' ' ) )
   }
 }
 

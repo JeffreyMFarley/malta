@@ -1,33 +1,9 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 import { addTag } from '../actions/tags'
+import { cloneDeep } from '../utils'
+import fixtureTags from './__fixtures__/tags-initial'
 
-export const initialState = {
-  dimensions: [
-    { Stack: [
-      { UI: [ 'Browser', 'Desktop', 'Visualization', 'Charts' ]},
-      { BI: [ 'Reports', 'KPI', 'Analytics', 'M/L', 'AI', 'Map/Reduce' ]},
-      { API: []},
-      { Database: [ 'Relational', 'Warehouse' ]},
-      { ETL: []},
-      { Integration: [ 'CI/CD' ]},
-      { Infrastructure: [ 'Windows', 'Linux', 'IaaS', 'Cloud' ]}
-    ]},
-    { Tasks: [
-      { start: []},
-      { PMO: [
-        'track budget', 'manage resources', 'agile', 'change management'
-      ]},
-      { plan: [ 'analysis', 'requirements', 'user stories' ]},
-      { design: [ 'ux', 'data modeling', 'architecture', 'solution' ]},
-      { develop: [ 'code', 'test' ]},
-      { operate: [
-        'configure', 'release', 'monitor', 'service desk',
-        'disaster recovery'
-      ]},
-      { close: []}
-    ]}
-  ]
-}
+export const initialState = cloneDeep( fixtureTags )
 
 export const tagsSlice = createSlice( {
   name: 'tags',

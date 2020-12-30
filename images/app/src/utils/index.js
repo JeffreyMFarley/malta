@@ -15,6 +15,21 @@ export function clamp( x, min, max ) {
 }
 
 /**
+ * take in an array or object and clone it as completely new object to remove
+ * pointers.  If you .slice() an array of objects, the array is new, but
+ * copied objects still point to original objects, you will still have mutations
+ *
+ * @param {object|array} input the thing to copy
+ * @returns {object|array} the copied new thing
+ */
+export const cloneDeep = input => {
+  if ( typeof input !== 'undefined' ) {
+    JSON.parse( JSON.stringify( input ) )
+  }
+  return input
+}
+
+/**
  * Replacement for the common pattern:
  * if( o.field )
  *    x = o.field

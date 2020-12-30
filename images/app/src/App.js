@@ -1,5 +1,5 @@
-import './App.less'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.less'
 import ActiveDocument from './components/ActiveDocument'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'

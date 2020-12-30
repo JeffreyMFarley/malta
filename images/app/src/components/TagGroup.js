@@ -14,9 +14,10 @@ import Row from 'react-bootstrap/Row'
 class TagGroup extends React.Component {
   constructor( props ) {
     super( props );
-    this.state = { newTag: '' };
+    this.state = { newTag: '', showEdit: false };
     this.handleInput = this.handleInput.bind( this );
     this.handleSubmit = this.handleSubmit.bind( this );
+    this.handleToggle = this.handleToggle.bind( this );
   }
 
   handleInput = ev => {
@@ -30,11 +31,18 @@ class TagGroup extends React.Component {
 
     ev.preventDefault()
     dispatch( addTag( path, this.state.newTag ) )
-    this.setState( { newTag: '' } );
+    this.setState( { newTag: '', showEdit: false } );
+  }
+
+  handleToggle = () => {
+    this.setState( {
+      showEdit: !this.state.showEdit
+    } );
   }
 
   render() {
     const { activeLine, assigned, children, label, tokenized } = this.props
+    const { showEdit } = this.state
 
     const selVariant = ( x, defaultValue ) => {
       const lx = x.toLowerCase();
@@ -62,13 +70,15 @@ class TagGroup extends React.Component {
           x => <Button variant={ selVariant( x, 'outline-secondary' ) }
                        size="sm"
                        key={x}>
-                  {x}
+                 {x}
                </Button>
         ) }
-        <Form inline onSubmit={this.handleSubmit}>
-          <Button size="sm"
-                  variant="light"
-                  type="submit">+</Button>
+        <Button variant="light"
+               size="sm"
+               onClick={this.handleToggle}>
+         { showEdit ? '-' : '+' }
+        </Button>
+        { showEdit && <Form inline onSubmit={this.handleSubmit}>
           <Form.Label htmlFor={label + '_new'} srOnly>
             Tag
           </Form.Label>
@@ -77,7 +87,9 @@ class TagGroup extends React.Component {
                         onChange={this.handleInput}
                         value={this.state.newTag}
                         />
-        </Form>
+          <Button variant="success"
+                  type="submit">Add</Button>
+        </Form> }
 
       </Row>
     );

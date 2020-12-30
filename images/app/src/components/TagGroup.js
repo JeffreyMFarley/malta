@@ -2,6 +2,7 @@
 
 import { addTag } from '../actions/tags'
 import Button from 'react-bootstrap/Button'
+import { coalesce } from '../utils'
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form'
 // import PropTypes from 'prop-types';
@@ -31,17 +32,29 @@ class TagGroup extends React.Component {
   }
 
   render() {
-    const { children, label } = this.props;
+    const { assigned, children, label } = this.props;
+
+    const selVariant = ( x, defaultValue ) => {
+      let variant = defaultValue
+      if ( assigned.has( x ) ) {
+        variant = 'primary'
+      }
+
+      return variant
+    }
 
     return (
       <Row noGutters className="pb-2">
-        <Button variant="secondary" size="sm">{label}</Button>
+        <Button variant={ selVariant( label, 'secondary' ) }
+                size="sm">
+          {label}
+        </Button>
         { children.map(
-          x => <Button variant="outline-secondary"
+          x => <Button variant={ selVariant( x, 'outline-secondary' ) }
                        size="sm"
                        key={x}>
-                 {x}
-              </Button>
+                  {x}
+               </Button>
         ) }
         <Form inline onSubmit={this.handleSubmit}>
           <Button size="sm"
@@ -63,6 +76,14 @@ class TagGroup extends React.Component {
 }
 
 // --------------------------------------------------------------------------
-// Meta
+// redux
 
-export default connect()( TagGroup );
+const mapStateToProps = state => {
+  const { current, tagged } = state.document
+  const assigned = coalesce( tagged, current, [] )
+  return {
+    assigned: new Set( assigned )
+  }
+}
+
+export default connect( mapStateToProps )( TagGroup );

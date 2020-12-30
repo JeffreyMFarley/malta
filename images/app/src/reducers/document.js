@@ -4,7 +4,7 @@ import { nextLine, prevLine } from '../actions/navigateDocument'
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
-  current: 3,
+  current: 2,
   lines: [
     'Task Area 1:',
     'a. Design solutions toward the end user experience so that products produced meet end user goals and measure of success as well as the strategic business objectives of the providing organization.',
@@ -85,7 +85,10 @@ export const initialState = {
     'dd. Create step-by-step production deployment runbook identifying all activities, activity owners, and date/time of the execution of each steps of the deployment including a rollback plan.',
     'ee. Major production releases must include launch plan to identify all activities related to the product launch including but not limited to: Service Center/Help Desk communication, training and coordination, stakeholder communication, end user education and outreach materials, applicable trainings, user guides, demo recordings, and formal internal and external announcements scripts and dissemination mechanism.',
     'ff. Development and maintenance of application security documentation including documentation in support of achieving an Authority to Operate (ATO).'
-  ]
+  ],
+  tagged: {
+    3: [ 'develop', 'code', 'test' ]
+  }
 }
 
 export const documentSlice = createSlice( {

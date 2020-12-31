@@ -32,4 +32,7 @@ $ yarn add react-bootstrap bootstrap
 
 # Adding selectors
 $ yarn add reselect
+
+# Adding routing
+$ yarn add react-router-dom react-router-bootstrap
 ```

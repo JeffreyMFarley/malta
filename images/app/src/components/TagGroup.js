@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-alert */
 
 import {
-  activeLineSelector, assignedTagsSelector
+  activeLineSelector, assignedTagsSelector, tokenizedLineSelector
 } from '../selectors/document'
 import { addTag, assignTag, unassignTag } from '../actions/tags'
 import Button from 'react-bootstrap/Button'
@@ -99,14 +99,10 @@ class TagGroup extends React.Component {
 // --------------------------------------------------------------------------
 // redux
 
-const mapStateToProps = state => {
-  const activeLine = activeLineSelector( state ).toLowerCase()
-
-  return {
-    activeLine,
-    assigned: assignedTagsSelector( state ),
-    tokenized: new Set( activeLine.split( ' ' ) )
-  }
-}
+const mapStateToProps = state => ( {
+  activeLine: activeLineSelector( state ).toLowerCase(),
+  assigned: assignedTagsSelector( state ),
+  tokenized: new Set( tokenizedLineSelector( state ) )
+} )
 
 export default connect( mapStateToProps )( TagGroup );

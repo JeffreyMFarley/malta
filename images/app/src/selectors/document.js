@@ -15,3 +15,10 @@ export const assignedTagsSelector = state => {
   const { current, tagged } = state.document
   return coalesce( tagged, current, new Set() )
 }
+
+export const tokenizedLineSelector = createSelector(
+  activeLineSelector,
+  line => line.toLowerCase().replaceAll(
+    /,\.'"\)\(/g, ''
+  ).split( ' ' )
+)

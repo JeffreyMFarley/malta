@@ -3,30 +3,38 @@
 module.exports = Object.freeze( {
   dimensions: [
     { Stack: [
-      { UI: [ 'Browser', 'Desktop', 'Visualization', 'Charts' ]},
+      { UI: [ 'browser', 'desktop', 'visualization', 'charts' ]},
       { BI: [
-        'Reports', 'KPI', 'Analytics', 'machine learning',
-        'artificial intelligence', 'Map/Reduce' ]},
-      { API: []},
-      { Database: [ 'Relational', 'Warehouse' ]},
-      { ETL: [ 'data extraction' ]},
+        'reports', 'KPI', 'analytics', 'machine learning',
+        'artificial intelligence' ]},
+      { API: [ 'REST', 'RPC' ]},
+      { Database: [ 'relational', 'warehouse', 'NoSQL', 'data lake' ]},
+      { ETL: [ 'data extraction', 'data cleansing' ]},
       { Integration: [ 'CI/CD', 'orchestration' ]},
-      { Security: [ 'authentication', 'authorization', 'encryption' ]},
-      { Infrastructure: [ 'Windows', 'Linux', 'IaaS', 'Cloud', 'containers' ]},
+      { Security: [
+        'authentication', 'authorization', 'encryption',
+        'vulnerability scanning', 'intrusion detection'
+      ]},
+      { Platform: [
+        'Windows', 'Linux', 'Mac'
+      ]},
+      { Infrastructure: [
+        'IaaS', 'Cloud', 'containers'
+      ]},
       { Policy: []}
     ]},
     { Tasks: [
       { start: []},
       { 'Project Management': [
-        'track budget', 'manage resources', 'agile', 'change management',
-        'schedule', 'status'
+        'agile', 'track budget', 'manage scope', 'meet schedule',
+        'manage people', 'manage change', 'report status', 'waterfall'
       ]},
       { plan: [ 'analysis', 'requirements', 'user stories' ]},
       { design: [ 'ux', 'data modeling', 'architecture', 'solution' ]},
       { build: [ 'code', 'test', 'migrate' ]},
       { train: []},
       { operate: [
-        'configure', 'release', 'monitor', 'service desk', 'maintain',
+        'configure', 'release', 'monitor performance', 'service desk', 'maintain',
         'disaster recovery', 'identity management'
       ]},
       { close: []}

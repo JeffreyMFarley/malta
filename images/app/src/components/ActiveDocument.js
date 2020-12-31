@@ -9,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 
-const ITEMS_IN_VIEW = 4
+const ITEMS_IN_VIEW = 8
 const BEFORE_OR_AFTER = ITEMS_IN_VIEW >> 1
 
 /**

@@ -21,7 +21,8 @@ export default class TagDimension extends React.Component {
 
     return (
       <Container className="px-0">
-        <Row className="justify-content-between pt-3" noGutters>
+        <Row className="justify-content-between pt-3 mb-2 border-bottom border-4"
+             noGutters>
           <Col><h5>{label}</h5></Col>
           <Col xs={3}>
             <Button block size="sm" variant="light">+ Group</Button>

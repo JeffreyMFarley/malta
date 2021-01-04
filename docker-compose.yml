@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  app:
+    build: ./images/app
+    image: malta-app
+    ports:
+      - "8000:80"

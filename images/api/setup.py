@@ -31,8 +31,11 @@ def format_version(version, fmt=fmt):
 
 
 def get_git_version():
-    git_version = check_output(command.split()).decode('utf-8').strip()
-    return format_version(version=git_version)
+    try:
+        git_version = check_output(command.split()).decode('utf-8').strip()
+        return format_version(version=git_version)
+    except:
+        return '0.1'
 
 # -----------------------------------------------------------------------------
 # Readme Importer

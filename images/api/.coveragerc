@@ -1,0 +1,11 @@
+[run]
+omit = 
+    .tox/*
+
+[report]
+exclude_lines = 
+    pragma: no cover
+    if __name__ == .__main__.:
+    datetime.now()
+    diff.print_full()
+    except ImportError:

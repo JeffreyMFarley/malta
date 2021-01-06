@@ -1,9 +1,9 @@
-import { addTag } from '../actions/tags'
-import { cloneDeep } from '../utils'
+import { addTag, fetchTags } from '../actions/tags'
 import { createSlice } from '@reduxjs/toolkit';
-import fixtureTags from './__fixtures__/tags-initial'
 
-export const initialState = cloneDeep( fixtureTags )
+export const initialState = {
+  dimensions: [ { Stack: []}, { Tasks: []} ]
+}
 
 export const tagsSlice = createSlice( {
   name: 'tags',
@@ -16,7 +16,8 @@ export const tagsSlice = createSlice( {
 
       state.dimensions[a][b][c][d].push( value )
       return state
-    }
+    },
+    [fetchTags.fulfilled]: ( state, action ) => action.payload
   }
 } );
 

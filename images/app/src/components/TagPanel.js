@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button'
+import { coalesce } from '../utils'
 import Col from 'react-bootstrap/Col'
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container'
@@ -35,6 +36,8 @@ function TagPanel( { dimensions } ) {
   )
 }
 
-const mapStateToProps = state => ( { dimensions: state.tags.dimensions } )
+const mapStateToProps = state => ( {
+  dimensions: coalesce( state.tags, 'dimensions', [] )
+} )
 
 export default connect( mapStateToProps )( TagPanel );

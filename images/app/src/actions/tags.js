@@ -1,4 +1,4 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const addTag = createAction(
   'TAG_ADDED',
@@ -17,6 +17,23 @@ export const assignTag = createAction(
       value
     }
   } )
+)
+
+export const fetchTags = createAsyncThunk(
+  'TAG_FETCH',
+  async () => {
+    const response = await fetch(
+      'http://localhost:8000/tags/'
+    )
+
+    if ( !response.ok ) {
+      const message = `An error has occured: ${ response.status }`;
+      throw new Error( message );
+    }
+
+    const data = await response.json()
+    return data
+  }
 )
 
 export const unassignTag = createAction(

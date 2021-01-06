@@ -13,6 +13,7 @@ services:
     image: malta-api
     environment:
       - PORT0=8080
+      - DJANGO_SU_PASSWORD=admin
     ports:
       - "8000:8080"
     volumes:

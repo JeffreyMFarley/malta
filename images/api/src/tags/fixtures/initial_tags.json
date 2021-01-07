@@ -1,0 +1,600 @@
+[
+  {
+    "model": "tags.dimension",
+    "pk": 1,
+    "fields": {
+      "name": "Stack"
+    }
+  },
+  {
+    "model": "tags.dimension",
+    "pk": 2,
+    "fields": {
+      "name": "Tasks"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 1,
+    "fields": {
+      "dimension": 1,
+      "name": "UI"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 2,
+    "fields": {
+      "dimension": 1,
+      "name": "BI"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 3,
+    "fields": {
+      "dimension": 1,
+      "name": "API"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 4,
+    "fields": {
+      "dimension": 1,
+      "name": "Database"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 5,
+    "fields": {
+      "dimension": 1,
+      "name": "ETL"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 6,
+    "fields": {
+      "dimension": 1,
+      "name": "Integration"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 7,
+    "fields": {
+      "dimension": 1,
+      "name": "Security"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 8,
+    "fields": {
+      "dimension": 1,
+      "name": "Platform"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 9,
+    "fields": {
+      "dimension": 1,
+      "name": "Infrastructure"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 10,
+    "fields": {
+      "dimension": 1,
+      "name": "Policy"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 11,
+    "fields": {
+      "dimension": 2,
+      "name": "start"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 12,
+    "fields": {
+      "dimension": 2,
+      "name": "Project Management"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 13,
+    "fields": {
+      "dimension": 2,
+      "name": "plan"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 14,
+    "fields": {
+      "dimension": 2,
+      "name": "design"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 15,
+    "fields": {
+      "dimension": 2,
+      "name": "build"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 16,
+    "fields": {
+      "dimension": 2,
+      "name": "train"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 17,
+    "fields": {
+      "dimension": 2,
+      "name": "operate"
+    }
+  },
+  {
+    "model": "tags.group",
+    "pk": 18,
+    "fields": {
+      "dimension": 2,
+      "name": "close"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 1,
+    "fields": {
+      "group": 1,
+      "name": "browser"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 2,
+    "fields": {
+      "group": 1,
+      "name": "desktop"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 3,
+    "fields": {
+      "group": 1,
+      "name": "visualization"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 4,
+    "fields": {
+      "group": 1,
+      "name": "charts"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 5,
+    "fields": {
+      "group": 2,
+      "name": "reports"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 6,
+    "fields": {
+      "group": 2,
+      "name": "KPI"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 7,
+    "fields": {
+      "group": 2,
+      "name": "analytics"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 8,
+    "fields": {
+      "group": 2,
+      "name": "machine learning"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 9,
+    "fields": {
+      "group": 2,
+      "name": "artificial intelligence"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 10,
+    "fields": {
+      "group": 3,
+      "name": "REST"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 11,
+    "fields": {
+      "group": 3,
+      "name": "RPC"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 12,
+    "fields": {
+      "group": 4,
+      "name": "relational"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 13,
+    "fields": {
+      "group": 4,
+      "name": "warehouse"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 14,
+    "fields": {
+      "group": 4,
+      "name": "NoSQL"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 15,
+    "fields": {
+      "group": 4,
+      "name": "data lake"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 16,
+    "fields": {
+      "group": 5,
+      "name": "data extraction"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 17,
+    "fields": {
+      "group": 5,
+      "name": "data cleansing"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 18,
+    "fields": {
+      "group": 6,
+      "name": "CI/CD"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 19,
+    "fields": {
+      "group": 6,
+      "name": "orchestration"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 20,
+    "fields": {
+      "group": 7,
+      "name": "authentication"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 21,
+    "fields": {
+      "group": 7,
+      "name": "authorization"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 22,
+    "fields": {
+      "group": 7,
+      "name": "encryption"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 23,
+    "fields": {
+      "group": 7,
+      "name": "vulnerability scanning"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 24,
+    "fields": {
+      "group": 7,
+      "name": "intrusion detection"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 25,
+    "fields": {
+      "group": 8,
+      "name": "Windows"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 26,
+    "fields": {
+      "group": 8,
+      "name": "Linux"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 27,
+    "fields": {
+      "group": 8,
+      "name": "Mac"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 28,
+    "fields": {
+      "group": 9,
+      "name": "Iaas"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 29,
+    "fields": {
+      "group": 9,
+      "name": "Cloud"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 30,
+    "fields": {
+      "group": 9,
+      "name": "containers"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 31,
+    "fields": {
+      "group": 12,
+      "name": "agile"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 32,
+    "fields": {
+      "group": 12,
+      "name": "track budget"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 33,
+    "fields": {
+      "group": 12,
+      "name": "manage scope"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 34,
+    "fields": {
+      "group": 12,
+      "name": "meet schedule"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 35,
+    "fields": {
+      "group": 12,
+      "name": "manage people"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 36,
+    "fields": {
+      "group": 12,
+      "name": "manage change"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 37,
+    "fields": {
+      "group": 12,
+      "name": "report status"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 38,
+    "fields": {
+      "group": 12,
+      "name": "waterfall"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 39,
+    "fields": {
+      "group": 13,
+      "name": "analysis"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 40,
+    "fields": {
+      "group": 13,
+      "name": "requirements"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 41,
+    "fields": {
+      "group": 13,
+      "name": "user stories"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 42,
+    "fields": {
+      "group": 14,
+      "name": "ux"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 43,
+    "fields": {
+      "group": 14,
+      "name": "data modeling"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 44,
+    "fields": {
+      "group": 14,
+      "name": "architecture"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 45,
+    "fields": {
+      "group": 14,
+      "name": "solution"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 46,
+    "fields": {
+      "group": 15,
+      "name": "code"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 47,
+    "fields": {
+      "group": 15,
+      "name": "test"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 48,
+    "fields": {
+      "group": 15,
+      "name": "migrate"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 49,
+    "fields": {
+      "group": 17,
+      "name": "configure"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 50,
+    "fields": {
+      "group": 17,
+      "name": "release"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 51,
+    "fields": {
+      "group": 17,
+      "name": "monitor performance"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 52,
+    "fields": {
+      "group": 17,
+      "name": "service desk"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 53,
+    "fields": {
+      "group": 17,
+      "name": "maintain"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 54,
+    "fields": {
+      "group": 17,
+      "name": "disaster recovery"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "pk": 55,
+    "fields": {
+      "group": 17,
+      "name": "identity management"
+    }
+  }
+]

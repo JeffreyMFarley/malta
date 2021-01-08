@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'cv.apps.CvConfig',
+    'documents.apps.DocumentsConfig',
     'tags.apps.TagsConfig',
 ]
 

@@ -1,16 +1,13 @@
 from django.contrib import admin
+from django.apps import apps
+from .models import CV, CVDocument
 
-from .models import CV
+Document = apps.get_model('documents', 'Document')
 
-    # agency = models.CharField(max_length=200)
-    # office = models.CharField(max_length=200, blank=True)
-    # project_name = models.CharField(max_length=200)
-    # prime = models.CharField(max_length=200, blank=True)
-    # subs = models.CharField(max_length=200, blank=True)
-    # staff_size = models.IntegerField(blank=True, null=True)
-    # pop_start = models.DateField(blank=True, null=True)
-    # pop_end = models.DateField(blank=True, null=True)
 
+class MembershipInline(admin.TabularInline):
+    model = CVDocument
+    extra = 0
 
 class CVAdmin(admin.ModelAdmin):
     date_hierarchy = 'pop_start'
@@ -18,6 +15,7 @@ class CVAdmin(admin.ModelAdmin):
         'agency', 'office', 'project_name', 'prime', 'subs',
         'pop_start', 'pop_end', 'staff_size'
     )
+    inlines = [MembershipInline]
     list_display = (
         'agency', 'office', 'project_name', 'prime', 'subs',
         'pop_start', 'pop_end', 'staff_size'

@@ -1,10 +1,10 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import viewsets
+from .models import Document
+from .serializers import DocumentSerializer
 
 # -----------------------------------------------------------------------------
 # Request Handlers
 
-@api_view(['GET'])
-def index(request):
-    data = []
-    return Response(data)
+class DocumentViewSet(viewsets.ModelViewSet):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer

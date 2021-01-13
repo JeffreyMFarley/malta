@@ -1,9 +1,16 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import viewsets
+from .models import CV
+from .serializers import CVSerializer
 
 # -----------------------------------------------------------------------------
-# Request Handlers: Complaints
-@api_view(['GET'])
-def index(request):
-    data = []
-    return Response(data)
+# Request Handlers
+
+class CVViewSet(viewsets.ModelViewSet):
+    """
+    The CV of Pluribus.
+
+    It contains the past performances with our clients
+    """
+    basename = "cv"
+    queryset = CV.objects.all()
+    serializer_class = CVSerializer

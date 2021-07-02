@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   app:
-    build: ./images/app
+    build: ./app
     image: malta-app
     depends_on:
       - api
@@ -9,7 +9,7 @@ services:
       - "80:80"
 
   api:
-    build: ./images/api
+    build: ./api
     image: malta-api
     environment:
       - PORT0=8080
@@ -17,4 +17,4 @@ services:
     ports:
       - "8000:8080"
     volumes:
-      - ./images/api/src:/usr/src/app
+      - ./api/src:/usr/src/app

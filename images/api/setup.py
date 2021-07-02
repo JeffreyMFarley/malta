@@ -50,7 +50,9 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 install_requires = [
     'Django>=1.11,<3.2',
     'djangorestframework>=3.9.1,<4.0',
-    'django-rest-swagger>=2.2.0'
+    'django-rest-swagger>=2.2.0',
+    'spacy',
+    'spacy-lookups-data',
 ]
 
 testing_extras = [
@@ -68,9 +70,9 @@ setup(
     version=get_git_version(),
     description='Malta API',
     long_description=long_description,
-    url='https://github.com/cfpb/ccdb5-api',
+    url='https://github.com/JeffreyMFarley/malta',
     author='Jeff Farley',
-    author_email='jeffrey.m.farely@gmail.com',
+    author_email='jeffrey.m.farley@gmail.com',
     license='CC0',
     classifiers=[
         'Programming Language :: Python',

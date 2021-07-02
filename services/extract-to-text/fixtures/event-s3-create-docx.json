@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2021-07-02T19:34:43.767Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "AWS:AIDAIK7DWKGE6BCZCZUYI"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "76.100.118.130"
+      },
+      "responseElements": {
+        "x-amz-request-id": "YH8YK31MKKDSMEEQ",
+        "x-amz-id-2": "5/sJIBiY7r3k9TtwRl80F8z3ydAl3xi4lz5XjcXhanKZPAcmVNCWn2q3bjO1ZAQjABFyer3hDeGeKQGKQWbeJxSQUPvwmcNS"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "tf-s3-lambda-20210702192902695100000002",
+        "bucket": {
+          "name": "malta-intake",
+          "ownerIdentity": {
+            "principalId": "A9OCH995GLE99"
+          },
+          "arn": "arn:aws:s3:::malta-intake"
+        },
+        "object": {
+          "key": "RFI_-_ILA0050_WI_UI_Modernization_Project_Final.docx",
+          "size": 329742,
+          "eTag": "14ca617c0c5b19568b1f8e733d45c6f0",
+          "sequencer": "0060DF6A568BF605CC"
+        }
+      }
+    }
+  ]
+}

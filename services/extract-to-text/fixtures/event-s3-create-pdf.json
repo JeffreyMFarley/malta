@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2021-07-02T19:37:23.010Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "AWS:AIDAIK7DWKGE6BCZCZUYI"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "76.100.118.130"
+      },
+      "responseElements": {
+        "x-amz-request-id": "51114VWF9QVZ63NR",
+        "x-amz-id-2": "rhMxyNzk1LzX9x/Pxk5dOjvNiJScwzXZZDPE14UyVfkg11MDybUPMQTnRs65QPVcbiqAHEt9h6i97t4FnnffqUJv8Xkxjea3"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "tf-s3-lambda-20210702192902695100000002",
+        "bucket": {
+          "name": "malta-intake",
+          "ownerIdentity": {
+            "principalId": "A9OCH995GLE99"
+          },
+          "arn": "arn:aws:s3:::malta-intake"
+        },
+        "object": {
+          "key": "CCP+PWS+2021-06-25.pdf",
+          "size": 1675763,
+          "eTag": "3d6634a0565b90a1764d9a8e9fcc2e28",
+          "sequencer": "0060DF6AFD2BA604CE"
+        }
+      }
+    }
+  ]
+}

@@ -18,3 +18,11 @@ services:
       - "8000:8080"
     volumes:
       - ./api/src:/usr/src/app
+
+  extractToText:
+    container_name: extractToText
+    image: 925340840713.dkr.ecr.us-east-1.amazonaws.com/malta_to_text:latest
+    build:
+      context: ./extract-to-text
+    ports:
+      - 9000:8080

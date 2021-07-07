@@ -24,5 +24,9 @@ services:
     image: 925340840713.dkr.ecr.us-east-1.amazonaws.com/malta_to_text:latest
     build:
       context: ./extract-to-text
+    env_file:
+      - ./.env
+    environment:
+      - TARGET_BUCKET=malta-lake
     ports:
       - 9000:8080

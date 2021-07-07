@@ -60,10 +60,35 @@ def handle_docx(client, istream, dest_bucket, key):
 # PDF
 
 def handle_pdf(client, istream, dest_bucket, key):
+    previousPageHeader = ['', '', '', '', '']
+
     with pdfplumber.open(istream) as pdf:
         with io.BytesIO() as ostream:
             for i, page in enumerate(pdf.pages):
                 content = page.extract_text()
+                lines = content.split('\n')
+
+                # - Logic for removing identical headers
+                pageHeader = lines[0:4]
+                same = set()
+
+                for j, l in enumerate(pageHeader):
+                    if l == previousPageHeader[j]:
+                        same.add(j)
+
+                content = '\n'.join([
+                    l
+                    for j, l in enumerate(lines)
+                    if j not in same
+                ])
+
+                if same:
+                    ll = '\n'.join([lines[j] for j in list(same)])
+                    logger.info(f'Page {i}: Removed Header\n"{ll}"')
+
+                previousPageHeader = pageHeader
+                # /Logic
+
                 # content = replace_characters(table, content, True)
                 ostream.write(content.encode('utf-8'))
                 ostream.write(BYTE_CR)

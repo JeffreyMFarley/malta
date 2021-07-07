@@ -14,10 +14,12 @@ resource "aws_lambda_function" "main" {
    image_uri     = "${var.repository_url}:latest"
    role          = aws_iam_role.main.arn
    package_type  = "Image"
+   memory_size   = var.memory_size
+   timeout       = var.timeout
 
    environment {
      variables = {
-      TARGET_BUCKET = var.target_bucket_id 
+      TARGET_BUCKET = var.target_bucket_id
      }
    }
 

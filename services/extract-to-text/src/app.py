@@ -19,6 +19,29 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
+# --------------------------------------------------------------------------------
+# Helpers
+
+def buildWhitespaceReplace():
+    table = {0xa0: ' ',    # non-breaking space
+
+             0x2028: '\n',  # Line separator
+             0x2029: '\n',  # Paragraph separator
+             0x2060: ' ',  # Word-Joiner
+             0x202f: ' ',  # Narrow no-break space
+             0x205F: ' ',  # Medium Mathematical Space
+             0x3000: ' ',  # Ideographic Space
+             }
+    table.update({c: ' ' for c in range(0x2000, 0x200b)}) # Unicode spaces
+    table.update({c: None for c in range(0x200b, 0x200e)}) # Zero-width spaces
+
+    return table
+
+
+# --------------------------------------------------------------------------------
+# Copy
+
+
 def handle_copy(client, istream, dest_bucket, key):
     client.upload_fileobj(istream, dest_bucket, key)
     return f'copied to {dest_bucket}/{key}'
@@ -61,11 +84,12 @@ def handle_docx(client, istream, dest_bucket, key):
 
 def handle_pdf(client, istream, dest_bucket, key):
     previousPageHeader = ['', '', '', '', '']
+    replacements = buildWhitespaceReplace()
 
     with pdfplumber.open(istream) as pdf:
         with io.BytesIO() as ostream:
             for i, page in enumerate(pdf.pages):
-                content = page.extract_text()
+                content = page.extract_text().translate(replacements)
                 lines = content.split('\n')
 
                 # - Logic for removing identical headers
@@ -77,7 +101,7 @@ def handle_pdf(client, istream, dest_bucket, key):
                         same.add(j)
 
                 content = '\n'.join([
-                    l
+                    l.strip()
                     for j, l in enumerate(lines)
                     if j not in same
                 ])

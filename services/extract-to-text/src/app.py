@@ -94,11 +94,18 @@ def handle_pdf(client, istream, dest_bucket, key):
 
                 # - Logic for removing identical headers
                 pageHeader = lines[0:4]
+                thisPage = f'Page {i + 1}'
                 same = set()
 
                 for j, l in enumerate(pageHeader):
                     if l == previousPageHeader[j]:
                         same.add(j)
+                    elif thisPage in l:
+                        same.add(j)
+
+                # Check last line
+                if thisPage in lines[-1]:
+                    same.add(len(lines) - 1)
 
                 content = '\n'.join([
                     l.strip()
@@ -108,7 +115,7 @@ def handle_pdf(client, istream, dest_bucket, key):
 
                 if same:
                     ll = '\n'.join([lines[j] for j in list(same)])
-                    logger.info(f'Page {i}: Removed Header\n"{ll}"')
+                    logger.info(f'Page {i}: Removed Header(s)\n{ll}')
 
                 previousPageHeader = pageHeader
                 # /Logic

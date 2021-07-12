@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 module "image_repo" {
-  for_each = toset(["to_text"])
+  for_each = toset(["to_text", "to_corpus"])
   source   = "./ecr"
   name     = lower("${var.name}_${each.key}")
 }
@@ -26,4 +26,14 @@ module "to_text" {
   repository_url   = module.image_repo["to_text"].repo_url
   source_bucket_id = module.buckets["intake"].id
   target_bucket_id = module.buckets["lake"].id
+}
+
+module "to_corpus" {
+  source = "./s3-trigger-lambda"
+
+  name             = "${var.name}-to-corpus"
+  repository_name  = module.image_repo["to_corpus"].name
+  repository_url   = module.image_repo["to_corpus"].repo_url
+  source_bucket_id = module.buckets["lake"].id
+  target_bucket_id = module.buckets["corpus"].id
 }

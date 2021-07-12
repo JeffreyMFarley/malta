@@ -30,3 +30,15 @@ services:
       - TARGET_BUCKET=malta-lake
     ports:
       - 9000:8080
+
+  toCorpus:
+    container_name: toCorpus
+    image: 925340840713.dkr.ecr.us-east-1.amazonaws.com/malta_to_corpus:latest
+    build:
+      context: ./to-corpus
+    env_file:
+      - ./.env
+    environment:
+      - TARGET_BUCKET=malta-corpus
+    ports:
+      - 9001:8080

@@ -6,7 +6,7 @@ services:
     depends_on:
       - api
     ports:
-      - "80:80"
+      - 80:80
 
   api:
     build: ./api
@@ -15,9 +15,21 @@ services:
       - PORT0=8080
       - DJANGO_SU_PASSWORD=admin
     ports:
-      - "8000:8080"
+      - 8000:8080
     volumes:
       - ./api/src:/usr/src/app
+
+  explorer:
+    build: ./explorer
+    image: 925340840713.dkr.ecr.us-east-1.amazonaws.com/malta_explorer:latest
+    env_file:
+      - ./.env
+    environment:
+      - SOURCE_BUCKET=malta-corpus
+    ports:
+      - 5000:5000
+    volumes:
+      - ./explorer/src/app.py:/home/app/app.py
 
   extractToText:
     container_name: extractToText

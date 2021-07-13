@@ -12,7 +12,7 @@ from xml.etree.ElementTree import XML
 
 import pdfplumber
 
-
+BULLET = 0xB7
 BYTE_CR = '\n'.encode('utf-8')
 
 logger = logging.getLogger(__name__)
@@ -22,18 +22,47 @@ logger.setLevel(logging.DEBUG)
 # --------------------------------------------------------------------------------
 # Helpers
 
-def buildWhitespaceReplace():
+def buildReplaceTable():
     table = {0xa0: ' ',    # non-breaking space
+             0xa6: '|',
+             0xb4: '\'',
+             0xb6: '*',
+             0xd7: 'x',
 
+             0x2022: BULLET,   # bullet
+             0x2023: BULLET,   # triangular bullet
+             0x2024: '.',  # one dot leader
+             0x2026: '',   # ellipses
+             0x2027: '*',  # hyphenation point
              0x2028: '\n',  # Line separator
              0x2029: '\n',  # Paragraph separator
-             0x2060: ' ',  # Word-Joiner
              0x202f: ' ',  # Narrow no-break space
+             0x2032: "'",  # prime
+             0x2033: '"',  # double prime
+             0x2035: "'",  # reversed prime
+             0x2036: '"',  # reversed double prime
+             0x2039: '<',
+             0x203a: '>',
+             0x2043: BULLET,  # hyphen bullet
+             0x2044: '/',
+             0x204e: '*',
+             0x2053: '~',
              0x205F: ' ',  # Medium Mathematical Space
+             0x2060: ' ',  # Word-Joiner
+             0x2219: BULLET,   # bullet operator
+             0x25CB: BULLET,   # white circle
+             0x25A1: BULLET,   # white square
+             0x25CF: BULLET,   # black circle
+             0x25E6: BULLET,   # white bullet
+             0x2610: BULLET,   # ballot box
+             0x2612: BULLET,   # ballot box with x
              0x3000: ' ',  # Ideographic Space
              }
     table.update({c: ' ' for c in range(0x2000, 0x200b)}) # Unicode spaces
     table.update({c: None for c in range(0x200b, 0x200e)}) # Zero-width spaces
+    table.update({c: '-' for c in range(0x2010, 0x2015)}) # Unicode hyphens
+    table.update({c: "'" for c in range(0x2018, 0x201b)}) # smart single quotes
+    table.update({c: '"' for c in range(0x201c, 0x201f)}) # smart double quotes
 
     return table
 
@@ -59,6 +88,8 @@ def handle_docx(client, istream, dest_bucket, key):
     PARA = WORD_NAMESPACE + 'p'
     TEXT = WORD_NAMESPACE + 't'
 
+    replacements = buildReplaceTable()
+
     document = zipfile.ZipFile(istream)
     xml_content = document.read('word/document.xml')
     document.close()
@@ -66,7 +97,7 @@ def handle_docx(client, istream, dest_bucket, key):
 
     with io.BytesIO() as ostream:
         for paragraph in tree.iter(PARA):
-            texts = [node.text
+            texts = [node.text.translate(replacements)
                      for node in paragraph.iter(TEXT)
                      if node.text]
             if texts:
@@ -84,7 +115,7 @@ def handle_docx(client, istream, dest_bucket, key):
 
 def handle_pdf(client, istream, dest_bucket, key):
     previousPageHeader = ['', '', '', '', '']
-    replacements = buildWhitespaceReplace()
+    replacements = buildReplaceTable()
 
     with pdfplumber.open(istream) as pdf:
         with io.BytesIO() as ostream:
@@ -100,11 +131,11 @@ def handle_pdf(client, istream, dest_bucket, key):
                 for j, l in enumerate(pageHeader):
                     if l == previousPageHeader[j]:
                         same.add(j)
-                    elif thisPage in l:
+                    elif thisPage in l or thisPage.lower() in l:
                         same.add(j)
 
                 # Check last line
-                if thisPage in lines[-1]:
+                if thisPage in lines[-1] or thisPage.lower() in lines[-1]:
                     same.add(len(lines) - 1)
 
                 content = '\n'.join([

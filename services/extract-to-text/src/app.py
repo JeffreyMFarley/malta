@@ -3,6 +3,7 @@ import json
 import io
 import logging
 import os
+import re
 import sys
 import traceback
 import zipfile
@@ -18,9 +19,11 @@ BYTE_CR = '\n'.encode('utf-8')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+regexNoSpaceOutline = re.compile('([0-9.]+)([A-Za-z]+)')
 
 # --------------------------------------------------------------------------------
 # Helpers
+
 
 def buildReplaceTable():
     table = {0xa0: ' ',    # non-breaking space
@@ -96,12 +99,20 @@ def handle_docx(client, istream, dest_bucket, key):
     tree = XML(xml_content)
 
     with io.BytesIO() as ostream:
-        for paragraph in tree.iter(PARA):
+        for i, paragraph in enumerate(tree.iter(PARA)):
             texts = [node.text.translate(replacements)
-                     for node in paragraph.iter(TEXT)
+                     for node in paragraph.iter()
                      if node.text]
             if texts:
-                ostream.write(''.join(texts).encode('utf-8'))
+                s = ''.join(texts)
+                m = regexNoSpaceOutline.match(s)
+                if m:
+                    g = m.groups()
+                    bad = f'{g[0]}{g[1]}'
+                    good = f'{g[0]} {g[1]}'
+                    s = s.replace(bad, good)
+
+                ostream.write(s.encode('utf-8'))
                 ostream.write(BYTE_CR)
 
         ostream.seek(0)

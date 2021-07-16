@@ -1,0 +1,11 @@
+AWS
+Azure
+cloud
+Google Cloud
+Linux
+Mac
+PaaS
+Red Hat
+RHEL
+SaaS
+Windows

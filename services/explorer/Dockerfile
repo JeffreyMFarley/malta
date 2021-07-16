@@ -27,7 +27,7 @@ COPY requirements.txt /
 RUN python${RUNTIME_VERSION} -m pip install -r /requirements.txt --target ${FUNCTION_DIR}
 
 # Copy the src files
-COPY src/* ${FUNCTION_DIR}
+COPY src/ ${FUNCTION_DIR}
 
 # --------------------------------------------------------------------------------
 # Stage 3 - final runtime image

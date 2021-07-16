@@ -1,0 +1,19 @@
+agile
+
+track budget
+
+manage scope
+
+meet schedule
+
+manage people
+
+manage change
+
+report status
+
+waterfall
+
+scrum
+
+daily standup

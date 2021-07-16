@@ -1,0 +1,6 @@
+develop code
+write code
+unit test
+systems test
+integration test
+migrate

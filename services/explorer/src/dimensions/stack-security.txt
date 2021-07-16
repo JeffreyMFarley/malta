@@ -1,0 +1,6 @@
+authentication
+authorization
+encryption
+intrusion detection
+Snyk
+vulnerability scanning

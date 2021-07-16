@@ -25,11 +25,15 @@ services:
     env_file:
       - ./.env
     environment:
-      - SOURCE_BUCKET=malta-corpus
+      - SOURCE_BUCKET=malta-lake
+      - CORPUS_BUCKET=malta-corpus
     ports:
       - 5000:5000
     volumes:
       - ./explorer/src/app.py:/home/app/app.py
+      - ./explorer/src/nlp.py:/home/app/nlp.py
+      - ./explorer/src/ts_ss.py:/home/app/ts_ss.py
+      - ./explorer/src/vectorize.py:/home/app/vectorize.py
 
   extractToText:
     container_name: extractToText

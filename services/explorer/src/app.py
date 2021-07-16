@@ -3,50 +3,50 @@ import logging
 import os
 import sys
 import time
+from collections import OrderedDict
 from functools import lru_cache
+from logging.config import dictConfig
 
 import boto3
 import numpy as np
 import pandas as pd
 import spacy
 from flask import abort, Flask, jsonify, request
-from sklearn.feature_extraction.text import TfidfVectorizer
 
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(module)s %(levelname)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://sys.stdout',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 
-BUCKET = os.environ['SOURCE_BUCKET']  # fail if gone
+from nlp import bagsOfWords, filter_for_words
+from ts_ss import TS_SS
+from vectorize import get_dimension_vectors
 
+#------------------------------------------------------------------------------
+# Globals & Constants
+#------------------------------------------------------------------------------
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
+# fail if gone
+SOURCE_BUCKET = os.environ['SOURCE_BUCKET']
+CORPUS_BUCKET = os.environ['CORPUS_BUCKET']
 
 app = Flask(__name__)
 s3 = boto3.resource('s3')
-nlp = spacy.load('en_core_web_sm', exclude=['ner', 'lemmatizer', 'textcat'])
+nlp = spacy.load('en_core_web_sm')
 
-
-#------------------------------------------------------------------------------
-# Helper functions
-#------------------------------------------------------------------------------
-
-
-def filter_tokens(doc):
-    for token in doc:
-        if (
-            not token.is_punct and
-            not token.is_space
-        ):
-            yield token
-
-
-def get_contents(bucket, key):
-    object = s3.Object(bucket, key)
-    contents = object.get()['Body'].read().decode('utf-8', errors='ignore')
-    return contents.split('\n')
-
-#------------------------------------------------------------------------------
-# Caching functions
-#------------------------------------------------------------------------------
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 # https://stackoverflow.com/a/55900800
@@ -55,61 +55,51 @@ def get_ttl_hash(seconds=600):
     return round(time.time() / seconds)
 
 
+#------------------------------------------------------------------------------
+# S3 Helper functions
+#------------------------------------------------------------------------------
+
+
 @lru_cache(maxsize=1)
-def available_docs(bucket_name, ttl_hash):
-    bucket = s3.Bucket(bucket_name)
+def available_docs(s3_resource, bucket_name, ttl_hash):
+    bucket = s3_resource.Bucket(bucket_name)
     avail = {}
 
     for i, o in enumerate(bucket.objects.all()):
-        object = s3.Object(o.bucket_name, o.key)
+        object = s3_resource.Object(o.bucket_name, o.key)
         hash = o.e_tag.replace('"', '')
         avail[hash] = o.key
 
     return avail
 
 
-@lru_cache(maxsize=1)
-def load_corpus(bucket_name, ttl_hash):
-    corpus = []  # The text of the file goes here
-    labels = []  # The name of the file goes here
+def get_contents(s3_resource, bucket, key):
+    object = s3_resource.Object(bucket, key)
+    contents = object.get()['Body'].read().decode('utf-8', errors='ignore')
+    return contents.split('\n')
 
-    bucket = s3.Bucket(bucket_name)
-    for o in bucket.objects.all():
-        print(f'Reading {o.key}')
-        sys.stdout.flush()
-        contents = o.get()['Body'].read().decode('utf-8', errors='ignore')
 
-        labels.append(o.key)
-        corpus.append(contents)
+def get_spdoc(s3_resource, bucket, etag, pipeline):
+    doc_file = etag + '.spdoc'
 
-    return corpus, labels
+    try:
+        object = s3_resource.Object(bucket, doc_file)
+        with io.BytesIO(object.get()['Body'].read()) as istream:
+            docBin = spacy.tokens.DocBin().from_bytes(istream.getvalue())
+        docs = list(docBin.get_docs(pipeline.vocab))
+    except Exception as ex:
+        logger.error(f'{bucket}/{doc_file}: {ex}')
+        return None
 
-@lru_cache(maxsize=1)
-def get_tfidf_vectors(bucket_name, ttl_hash):
-    corpus, labels = load_corpus(bucket_name, ttl_hash)
-
-    print(f'Parsing docs')
-    sys.stdout.flush()
-    docs = [
-        ' '.join([t.norm_ for t in filter_tokens(doc)])
-        for doc in nlp.pipe(corpus)
-    ]
-
-    # Prepare a TF-IDF vectorizer that reads sing words and two-word pairs
-    print(f'Vectorizing')
-    sys.stdout.flush()
-    tfidf_vectorizer = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True)
-    tfidf_vectors = tfidf_vectorizer.fit_transform(docs)
-
-    return tfidf_vectorizer, tfidf_vectors
+    return docs[0]
 
 #------------------------------------------------------------------------------
-# Routes
+# Flask methods & routes
 #------------------------------------------------------------------------------
 
 
 @app.after_request
-def after_request_func(response):
+def allow_cors(response):
     response.access_control_allow_headers = ['Content-Type']
     response.access_control_allow_origin = '*'
     response.access_control_allow_methods = ['OPTIONS','POST','GET']
@@ -118,39 +108,91 @@ def after_request_func(response):
 
 @app.route("/")
 def root():
-    avail = available_docs(BUCKET, get_ttl_hash())
+    avail = available_docs(s3, SOURCE_BUCKET, get_ttl_hash())
     return jsonify([
         {'file': v, 'url': request.base_url + k} for k, v in avail.items()
     ])
 
 
 @app.route('/<string:id>')
+@app.route('/<string:id>/')
 def get(id):
-    avail = available_docs(BUCKET, get_ttl_hash())
+    avail = available_docs(s3, SOURCE_BUCKET, get_ttl_hash())
     if id not in avail:
         abort(404)
 
-    contents = get_contents(BUCKET, avail[id])
+    contents = get_contents(s3, SOURCE_BUCKET, avail[id])
     return jsonify(contents)
 
 
 @app.route('/<string:id>/kwic')
+@app.route('/<string:id>/kwic/')
 def kwic(id):
-    avail = available_docs(BUCKET, get_ttl_hash())
+    avail = available_docs(s3, SOURCE_BUCKET, get_ttl_hash())
     if id not in avail:
         abort(404)
 
-    print(f'Get TFIDF vectors')
-    sys.stdout.flush()
-    tfidf_vectorizer, tfidf_vectors = get_tfidf_vectors(BUCKET, get_ttl_hash())
+    logger.info(f'Loading spaCy parse of {avail[id]}')
+    doc = get_spdoc(s3, CORPUS_BUCKET, id, nlp)
 
-    # Peek at the raw values
-    df = pd.DataFrame(tfidf_vectors.T.todense(),
-                      index=tfidf_vectorizer.get_feature_names())
-    print(df)
-    sys.stdout.flush()
+    logger.info('Loading known words')
+    known = set(nlp.vocab.strings)
 
-    return jsonify(tfidf_vectorizer.get_feature_names())
+    logger.info('Bag the words in the document')
+    bags = bagsOfWords(doc, known)
+
+    # # for subset in ['nouns', 'verbs', 'unknown', 'propers']:
+    # #     logger.info(f'{subset}\n{bags[subset]}')
+    # #
+
+    return jsonify(bags['nouns'].to_string().split('\n'))
+
+
+@app.route('/<string:id>/dimensions')
+@app.route('/<string:id>/dimensions/')
+def dimensions(id):
+    avail = available_docs(s3, SOURCE_BUCKET, get_ttl_hash())
+    if id not in avail:
+        abort(404)
+
+    logger.info(f'Loading spaCy parse of {avail[id]}')
+    doc = get_spdoc(s3, CORPUS_BUCKET, id, nlp)
+
+    logger.info('Get dimension vectors')
+    vectorizer, vectors, labels = get_dimension_vectors(get_ttl_hash())
+
+    # Peek at the raw values into a dataframe
+
+
+    # df = pd.DataFrame(vectors.T.todense(),
+    #                   index=vectorizer.get_feature_names(),
+    #                   columns=labels)
+
+    # Convert the spaCy document to a vector
+    docs = [
+        ' '.join([t.lemma_ for t in filter_for_words(doc)])
+    ]
+    input_vector = vectorizer.transform(docs)[0].todense()
+
+    # # Score similarity
+    # similarity = TS_SS()
+    # _scores = [
+    #     similarity(input_vector, v.todense())
+    #     for v in vectors
+    # ]
+    #
+    # # Create a Pandas series from the scores
+    # ts_ss_scores = pd.Series(_scores, index=labels, name='score')
+    #
+    # # Make a data frame
+    # df = ts_ss_scores.to_frame() #.reset_index().rename(columns={'index': 'File'})
+    # df.sort_values(by='score', ascending=False, inplace=True)
+
+    df = pd.DataFrame(input_vector.T, index=vectorizer.get_feature_names(), columns=['score'])
+    df = df[df['score'] > 0.00]
+    df.sort_values(by='score', ascending=False, inplace=True)
+
+    return jsonify(df.to_string().split('\n'))
 
 
 #------------------------------------------------------------------------------

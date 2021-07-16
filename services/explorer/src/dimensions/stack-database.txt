@@ -1,0 +1,10 @@
+data lake
+data warehouse
+Kafka
+NoSQL
+Oracle
+PostGRES
+query
+relational
+SQL Server
+tables
